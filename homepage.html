@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Concurrency And Deadlock</title>
+<body>
+
+
+<style>
+	body{
+		background-image: url("os.jpg")
+	}
+	.button {
+		padding: 17px 28px;
+		font-size: 24px;
+		text-align: center;
+		cursor: pointer;
+		outline: none;
+		color: yellowgreen;
+		background-color: red;
+		font:bold ;
+		border: 2px;
+		border-radius: 15px;
+		box-shadow: 0 9px #fff;
+		text-decoration: none;
+	}
+
+	.button a:link,
+	.button a:visited{
+		text-decoration: none;
+		text-transform: full-width;
+
+	}
+
+	.button a:hover,
+	.button a:active
+	{
+		background-color: yellowgreen;
+		box-shadow: 0 5px #fff;
+		transform: solid #fff;
+		border-bottom: 5px solid transparent;
+		transition: border-bottom 2s;
+	}
+</style>
+
+
+
+<h2 align="center"><font face="Castellar" size="30"><u style="
+    color: orange;
+    background-color: aqua;
+">Concurrency &amp; Deadlock </u></font></h2>
+<p style="
+    background-color: magenta;
+">Concurrency is the execution of the multiple instruction sequences at the same time. It happens in the operating system when there are several process threads running in parallel. The running process threads always communicate with each other through shared memory or message passing. Concurrency results in sharing of resources result in problems like deadlocks and resources starvation.
+
+</p>
+<p style="
+    background-color: antiquewhite;
+">Deadlock is a situation where a set of processes are blocked because each process is holding a resource and waiting for another resource acquired by some other process.
+	Consider an example when two trains are coming toward each other on the same track and there is only one track, none of the trains can move once they are in front of each other. A similar situation occurs in operating systems when there are two or more processes that hold some resources and wait for resources held by other(s). </p>
+
+
+
+<table cellspacing="30px" align="center">
+	<tbody><tr>
+		<td><button class="button"><font face="arial" size="5"><a href="banker's%20algo.html">Banker's algorithm</a></font></button></td>
+		<td><button class="button"><font face="arial" size="5"><a href="binary%20semaphore.html">Binary Semaphore</a></font></button></td>
+		<td><button class="button"><font face="arial" size="5"><a href="counting%20semaphore.html">Counting Semaphore</a></font></button></td>
+		<td><button class="button"><font face="arial " size="5"><a href="TSL.html">Tsl</a></font></button></td>
+		<td><button class="button"><font face="arial" size="5"><a href="lock_variable.html">Lock Variable</a></font></button></td>
+		<td><button class="button"><font face="arial" size="5"><a href="turn_variable.html">Turn variable</a></font></button></td>
+
+	</tr>
+
+	</tbody></table>
+
+
+
+
+</body>
+</head>

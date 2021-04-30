@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counting Semaphore</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <style type="text/css">/* Chart.js */
+  @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+  </style><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+</style></head>
+<body>&lt;<header>
+  <div class="navbar p-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="homepage.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="binary%20semaphore.html">Binary Semaphore</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="lock_variable.html">Lock variable</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="banker's%20algo.html">Banker's Algorithm</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="turn_variable.html">Turn variable</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light" href="TSL.html">TSL</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+</header>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Counting Semaphore</title>
+<h1 style="text-align:center;">Counting semaphore</h1>
+<p>This type of Semaphore uses a count that helps task to be acquired or released numerous times. If the initial count = 0, the counting semaphore should be created in the unavailable state.A counting semaphore can be any non-negative integer, also known as a whole number. Its value may increase or decrease based on the results of one or more functions. For example, a counting semaphore may keep track of the number of available resources in a resource pool. If the semaphore decrements more than it increments, it will eventually reach 0. A zero value indicates there are no more resources left.
+
+
+
+</p>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body{
+    background-color: aquamarine;
+  }
+  .navbar {
+    background-color: aquamarine;
+    padding: 1px;
+  }
+
+  .navbar ul li {
+    position: relative;
+    display: inline-block;
+    background-color: #212529;
+
+    margin-right: 20px;
+    margin-top: 20px;
+  }
+
+
+  #user_inp {
+    display: block;
+    flex-direction: column;
+    width: 20%;
+    margin: 50px 50px;
+  }
+
+  #user_inp>input {
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 0px;
+  }
+
+  #user_inp>button {
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 0px;
+    width: 40%;
+    color: white;
+  }
+
+  .ent-section {
+    float: left;
+    margin: 15px;
+    border-radius: 0px;
+    border-bottom: 2px solid #000;
+    transition: border-bottom 0.4s;
+  }
+
+  .cs-section {
+    float: left;
+    margin: 15px;
+    border-radius: 0px;
+    border-bottom: 2px solid #000;
+    transition: border-bottom 0.4s;
+  }
+
+  .ext-section {
+    float: left;
+    margin: 15px;
+    border-radius: 0px;
+    border-bottom: 2px solid #000;
+    transition: border-bottom 0.4s;
+  }
+
+  .semaphore {
+    border: 0px solid;
+  }
+
+
+</style>
+
+
+
+<div id="user_inp">
+  <input type="text" name="process" id="p_no" placeholder="  Number of processes" style="
+    margin-left: 500px;
+    background-color: tan;
+">
+  <input type="text" name="semaphore" id="sema" placeholder="  Max value of semaphore" style="
+    margin-left: 500px;
+    background-color: tan;
+">
+  <button class="btn btn-primary btn-sm waves-effect waves-light" id="begin" style="
+    margin-left: 500px;
+    background-color: tomato;
+">Start</button>
+</div>
+
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col-xs-4 col-4" id="processes">
+    </div>
+    <div class="col-xs-6 col-6">
+
+      <div class="ent-section">
+        <div class="p-4" style="
+    background-color: yellow;
+">
+          Entry Section
+          <div id="ShowEntry"></div>
+        </div>
+      </div>
+
+      <div class="cs-section">
+        <div class="p-4" style="background-color: blueviolet;">
+          Crititcal section
+          <div id="showCritical"></div>
+        </div>
+      </div>
+
+      <div class="ext-section">
+        <div class="p-4" style="background-color: brown;">
+          Exit Section
+          <div id="showExit"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 pt-4">
+  <div class="row">
+    <div class="col-5">
+
+    </div>
+    <div class="col-3">
+      <div class="semaphore">
+        <div class="text-center" style="
+    margin-left: 300p;
+">
+          Semaphore Structure
+
+          <h6 style="
+">Semaphore value = <span id="svalue"></span></h6>
+
+          <div style="border-bottom: 1px solid; padding: 5px;"></div>
+
+          <div>
+            <p>Process in blocked state</p>
+            <div id="blocked-process">
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class=""></div>
+  </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $("#begin").click(function() {
+      let process = '';
+      let p_no = $("#p_no").val();
+      let svalue = $("#sema").val();
+      let entry = [];
+      let critical = [];
+      let exit = [];
+      let queue = [];
+      for (let i = 0; i < p_no; i++) {
+        process += '<button class="btn btn-primary btn-sm" id="process' + i + '">Process ' + i + '</button><br>'
+      }
+      $("#processes").html(process);
+      $('#blocked-process').text(queue);
+      $('#svalue').text(svalue);
+
+      for (let i = 0; i < p_no; i++) {
+        $('#process' + i).click(function(e) {
+          e.preventDefault();
+          runProcess('Process ' + i);
+        });
+      }
+
+      function runProcess(msg) {
+        let no = parseInt(msg[8]);
+        $('#process' + no).hide();
+        if (svalue > 0) {
+          svalue--;
+          $('#svalue').text(svalue);
+          entry.push(msg);
+          $('#ShowEntry').text(entry);
+          setTimeout(() => {
+            entry = $.grep(entry, function(value) {
+              return value != msg;
+            });
+            $('#ShowEntry').text(entry);
+            critical.push(msg);
+            $('#showCritical').text(critical);
+            setTimeout(() => {
+              critical = $.grep(critical, function(value) {
+                return value != msg;
+              });
+              $('#showCritical').text(critical);
+              exit.push(msg);
+              $('#showExit').text(exit);
+              setTimeout(() => {
+                exit = $.grep(exit, function(value) {
+                  return value != msg;
+                });
+                $('#showExit').text(exit);
+                svalue++;
+                $('#svalue').text(svalue);
+                if (queue.length != 0) {
+                  let new_process = queue.shift()
+                  $('#blocked-process').text(queue);
+                  runProcess(new_process);
+                }
+              }, 1500);
+            }, 4000);
+          }, 2000);
+        } else if (svalue === 0) {
+          queue.push(msg);
+          $('#blocked-process').text(queue);
+        }
+      }
+    })
+  });
+</script>
+
+
+
+<div class="hiddendiv common"></div>
+
+</body>
+</html>

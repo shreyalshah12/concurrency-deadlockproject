@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSL </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{
+            color: yellow;
+            background-color: rebeccapurple;
+        }
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: left;
+            margin-right: 20px;
+        }
+
+        #user_inp {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            margin: 15px auto;
+            float: left;
+
+        }
+
+        #user_inp>input {
+            margin-top: 5px;
+            text-align: center;
+            border-radius: 0px;
+            border-left: 7px;
+        }
+
+        #user_inp>button {
+            margin: auto;
+            margin-top: 5px;
+            border-radius: 0px;
+            width: 20%;
+            border-left: 7px;
+        }
+
+        .ent-section {
+
+            margin: 15px;
+            float:left;
+            border-bottom: 2px solid #000;
+            transition: border-bottom 0.4s;
+        }
+
+        .ent-items {
+            float: left;
+            margin: 15px;
+            border-radius: 0px;
+            border-bottom: 2px solid #000;
+            transition: border-bottom 0.4s;
+        }
+
+        .cs-section {
+            float: left;
+            margin: 15px;
+            border-radius: 0px;
+            border-bottom: 2px solid #000;
+            transition: border-bottom 0.4s;
+        }
+
+        .ext-section {
+            float: left;
+            margin: 15px;
+            border-radius: 0px;
+            border-bottom: 2px solid #000;
+            transition: border-bottom 0.4s;
+        }
+
+        .lockvariable {
+            border: 3px solid;
+            border-bottom: 2px solid #000;
+        }
+
+        #showEntry,
+        #showCritical,
+        #showExit,
+        #waiting-process {
+            width: 100px;
+        }
+    </style>
+    <style type="text/css">/* Chart.js */
+    @-webkit-keyframes chartjs-render-
+    animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-
+    animation{from{opacity:0.99}to{opacity:1}}.chartjs-render- monitor{-
+    webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-
+    render-animation 0.001s;}</style><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+</style></head>
+<body>
+<header>
+    <div class="navbar p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="homepage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="binary%20semaphore.html">Binary Semaphore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="counting%20semaphore.html">Counting Semaphore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="banker's%20algo.html">Banker's Algorithm</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="lock_variable.html">Lock variable</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-effect waves-light" href="turn_variable.html">Turn Variable</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+</header>
+
+<h1 style="
+    text-align: center;
+">TSL</h1>
+<p>In TSL mechanism, a process will execute the TSL instruction only when it wants to get into the critical section. The value of the lock will always be 0 if no process doesn't want to enter into the critical section hence the progress is always guaranteed in TSL. Bounded Waiting is not guaranteed in TSL.
+</p>
+
+
+<div id="user_inp">
+    <input type="text" name="process" id="p_no" placeholder="Number of processes" style="
+    background-color: aqua;
+    margin-top: 200px;
+    margin-left: 100;
+    margin-left: 1px;
+">
+    <button class="btn btn-primary btn-sm waves-effect waves-light" id="begin">Start</button>
+</div>
+
+<div class="container-fluid p-4">
+    <div class="row">
+        <div class="col-xs-4 col-4" id="processes">
+        </div>
+        <div class="col-xs-6 col-6">
+
+            <div class="ent-section" style="
+    margin-top: 100px;
+">
+                <div class="p-4" style="
+    background-color: burlywood;
+">
+                    <div id="entrysection">
+                        Entry Section
+                    </div>
+                    <div class="btn btn-primary btn-sm px-1 waves-effect waves-light" id="showEntry" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="cs-section" style="">
+                <div class="p-4" style="
+    margin-top: 100px;
+    width: 160px;
+    background-color: chartreuse;
+">
+                    Crititcal section
+                    <div class="btn btn-primary btn-sm px-1 waves-effect waves-light" id="showCritical" style="display: none;"></div>
+                </div>
+            </div>
+
+            <div class="ext-section">
+                <div class="p-4" style="
+    background-color: violet;
+">
+                    Exit Section
+                    <div class="btn btn-primary btn-sm px-1 waves-effect waves-light" id="showExit" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4 pt-4">
+    <div class="row">
+        <div class="col-5" style="
+    background-color: rebeccapurple;
+">
+        </div>
+        <div class="col-3">
+            <div class="lockvariable" style="
+    background-color: black;
+">
+                <div class="text-center">
+                    Lock Variable
+
+                    <h6>Lock Value = <span id="svalue"></span></h6>
+
+                    <div style="border-bottom: 1px solid; padding: 5px;"></div>
+
+                    <div>
+                        <p>Process in Waiting Queue</p>
+                        <div class="btn btn-primary btn-sm px-1 waves-effect waves-light" id="waiting-process" style="display: none;">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#showEntry, #showCritical, #showExit, #waiting-process").css("display", "none");
+        $("#begin").click(function() {
+            let entry = [];
+            let critical = [];
+            let exit = [];
+            let queue = [];
+            let lock = 0;
+            let process = '';
+            let p_no = $("#p_no").val();
+            for (let i = 0; i < p_no; i++) {
+                process += '<button class="btn btn-primary btn-sm" id="process' + i + '">Process ' + i + '</button><br>'
+            }
+            $("#processes").html(process);
+            $('#waiting-process').text(queue);
+            $('#svalue').text(lock);
+            for (let i = 0; i < p_no; i++) {
+                $('#process' + i).click(function(e) {
+                    e.preventDefault();
+                    runProcess('Process ' + i);
+                });
+            }
+
+            function runProcess(msg) {
+                let no = parseInt(msg[8]);
+                $('#process' + no).hide();
+                $('#svalue').text(lock);
+                $('#entrysection').text('Testing...');
+                entry.push(msg);
+                $('#showEntry').css('display', 'block');
+                $('#showEntry').text(entry);
+                $('#svalue').text(lock);
+                if (lock == 0) {
+                    lock = 1;
+                    $('#svalue').text(lock);
+                    setTimeout(() => {
+                        $('#entrysection').text('Entry Section');
+                        entry = $.grep(entry, function(value) {
+                            return value != msg;
+                        });
+                        if (entry.length == 0) {
+                            $('#showEntry').css('display', 'none');
+                        }
+                        $('#showEntry').text(entry);
+                        critical.push(msg);
+                        $('#showCritical').css('display', 'block');
+                        $('#showCritical').text(critical);
+                        setTimeout(() => {
+                            critical = $.grep(critical, function(value) {
+                                return value != msg;
+                            });
+                            if (critical.length == 0) {
+                                $('#showCritical').css('display', 'none');
+                            }
+                            $('#showCritical').text(critical);
+                            exit.push(msg);
+                            $('#showExit').css('display', 'block');
+                            $('#showExit').text(exit);
+                            setTimeout(() => {
+                                exit = $.grep(exit, function(value) {
+                                    return value != msg;
+                                });
+                                if (exit.length == 0) {
+                                    $('#showExit').css('display', 'none');
+                                }
+                                $('#showExit').text(exit);
+                                lock = 0;
+                                $('#svalue').text(lock);
+                                if (queue.length != 0) {
+                                    let new_process = queue.shift()
+                                    if (queue.length == 0) {
+                                        $('#waiting-process').css('display', 'none');
+                                    }
+                                    $('#waiting-process').text(queue);
+                                    runProcess(new_process);
+                                } else {
+                                    $('#waiting-process').css('display', 'none');
+                                }
+                            }, 3000);
+                        }, 3000);
+                    }, 3000);
+                } else {
+                    setTimeout(() => {
+                        $('#entrysection').text('Entry Section');
+                        entry = $.grep(entry, function(value) {
+                            return value != msg;
+                        });
+                        if (entry.length == 0) {
+                            $('#showEntry').css('display', 'none');
+                        }
+                        $('#showEntry').text(entry);
+                        queue.push(msg);
+                        $('#waiting-process').css('display', 'block');
+                        $('#waiting-process').text(queue);
+                    }, 1500);
+                }
+            }
+        });
+    });
+</script>
+
+
+
+<div class="hiddendiv common"></div>
+
+
+
+
+</body>
+</html>
